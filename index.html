@@ -47,9 +47,9 @@
 				Content:{
 					Name:'我爱巧克力'
 				},
-				Drink:'饮料'
 			});
 			$translateProvider.preferredLanguage('cn');
+			$translateProvider.fallbackLanguage('en');
 		});
 		app.controller('FoodCtrl',function($scope, $translate){
 			$scope.changeLanguage = function(key){
