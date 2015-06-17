@@ -50,6 +50,7 @@
 			});
 			$translateProvider.preferredLanguage('cn');
 			$translateProvider.fallbackLanguage('en');
+			$translateProvider.useSanitizeValueStrategy('escaped');
 		});
 		app.controller('FoodCtrl',function($scope, $translate){
 			$scope.changeLanguage = function(key){
