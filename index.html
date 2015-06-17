@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	
+	<script src="angular.js" type="text/javascript"></script>
+	<script src="angular-translate.js" type="text/javascript"></script>
+
+</head>
+<body ng-app="food">
+	<h1>{{'Title' | translate}}</h1>
+	<h2>{{'Foo' | translate}}</h2>
+	
+	<script>
+		var app = angular.module('food',['pascalprecht.translate']);
+		app.config(function($translateProvider){
+			$translateProvider.translations('en',{
+				Title: 'hello',
+				Foo:'this is food',
+				Button_En: 'click'
+			});
+			$translateProvider.translations('cn',{
+				Title: '你好',
+				Foo:'开饭啦',
+				Button_En: '确定'
+			});
+			$translateProvider.preferredLanguage('en');
+		});
+		app.controller('FoodCtrl',function($scope, $translate){
+			$scope.changeLanguage = function(key){
+				$translate.use(key);
+			};
+		});
+	</script>
+</body>
+</html>
