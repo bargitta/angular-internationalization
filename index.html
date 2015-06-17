@@ -9,28 +9,60 @@
 
 </head>
 <body ng-app="food">
+	<div ng-controller="FoodCtrl">
+		
+		<a href="#" ng-click="changeLanguage('en')">English</a>
+		<a href="#" ng-click="changeLanguage('cn')">Chinese</a>
+			
+<!--	translate using filter-->
 	<h1>{{'Title' | translate}}</h1>
-	<h2>{{'Foo' | translate}}</h2>
+	<h2 translate="Foo" translate-value-food="oko"></h2>
+<!--	translate using directive better performance-->
+	<p translate>Content.Name</p>
+	<p translate="Content.Name"></p>
+	</div>
+	
+	<div ng-controller="DrinkCtrl">
+		<p> {{drinkContent}} </p>
+	<p translate="{{dynamicId}}"></p>
+		
+	</div>
 	
 	<script>
 		var app = angular.module('food',['pascalprecht.translate']);
 		app.config(function($translateProvider){
 			$translateProvider.translations('en',{
 				Title: 'hello',
-				Foo:'this is food',
-				Button_En: 'click'
+				Foo:'this is {{food}}',
+				Button_En: 'click',
+				Content:{
+					Name:'i love choclate'
+				},
+				Drink:'this is about drinks'
 			});
 			$translateProvider.translations('cn',{
 				Title: '你好',
-				Foo:'开饭啦',
-				Button_En: '确定'
+				Foo:'开饭{{food}}',
+				Button_En: '确定',
+				Content:{
+					Name:'我爱巧克力'
+				},
+				Drink:'饮料'
 			});
-			$translateProvider.preferredLanguage('en');
+			$translateProvider.preferredLanguage('cn');
 		});
 		app.controller('FoodCtrl',function($scope, $translate){
 			$scope.changeLanguage = function(key){
 				$translate.use(key);
 			};
+		});
+		
+		//translate using the service
+		app.controller('DrinkCtrl',function($translate, $scope){
+			$translate('Drink').then(function(drink){
+				$scope.drinkContent = drink + $translate.versionInfo();
+				$scope.dynamicId = "Drink";
+			});
 		});
 	</script>
 </body>
